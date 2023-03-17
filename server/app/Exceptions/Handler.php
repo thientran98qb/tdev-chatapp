@@ -2,7 +2,13 @@
 
 namespace App\Exceptions;
 
+use App\Http\Resources\ErrorResource;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
+use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -34,8 +40,26 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
-        $this->reportable(function (Throwable $e) {
-            //
+        $this->renderable(function (AuthenticationException $e, $request) {
+            return $this->makeErrorResponse(401, $e->getMessage(), null);
         });
+
+        $this->renderable(function (ApiException $e, $request) {
+            return $this->makeErrorResponse($e->getCode(), $e->getMessage(), null, $e->getData());
+        });
+
+        $this->renderable(function (NotFoundHttpException $e, $request) {
+            return $this->makeErrorResponse(404, $e->getMessage(), null);
+        });
+
+        $this->renderable(function (ValidationException $e, $request) {
+            $errors = $e->errors();
+            return $this->makeErrorResponse(422, __('入力が無効です。'), $errors);
+        });
+    }
+
+    protected function makeErrorResponse(int $code, string $message, ?array $errors = null, $data = null)
+    {
+        return (new ErrorResource($code, $message, $errors, $data))->response()->setStatusCode($code);
     }
 }

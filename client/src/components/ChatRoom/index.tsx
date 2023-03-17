@@ -12,7 +12,7 @@ const ChatRoom = (props: Props) => {
     <Box height="100vh">
         <Grid
             h="100vh"
-            templateColumns="repeat(3, 1fr)"
+            templateColumns="repeat(4, 1fr)"
         >
             <GridItem colSpan={1} bg="purple.400">
                 <Box>
@@ -21,7 +21,7 @@ const ChatRoom = (props: Props) => {
                     <RoomLists />
                 </Box>
             </GridItem>
-            <GridItem colSpan={2}>
+            <GridItem colSpan={3}>
                 <RoomInfo />
                 <Divider/>
                 <ChatMessages />
