@@ -2,9 +2,16 @@ import { Box, Flex } from '@chakra-ui/react'
 import ChatInputText from './ChatInputText'
 import ChatMessageItem from './ChatMessageItem'
 
-type Props = {}
+interface MessageType {
+  id: number,
+  message: string
+}
+type Props = {
+  messages: MessageType[],
+  onSubmitMessage: (message: string) => void
+}
 
-const ChatMessages = (props: Props) => {
+const ChatMessages = ({messages, onSubmitMessage}: Props) => {
   return (
     <Box h="calc(100vh - 80px)">
       <Flex
@@ -13,10 +20,8 @@ const ChatMessages = (props: Props) => {
         direction="column"
         justifyContent="flex-end"
       >
-        <ChatMessageItem/>
-        <ChatMessageItem/>
-        <ChatMessageItem/>
-        <ChatInputText />
+        {messages.map(message => <ChatMessageItem key={message.id} message={message.message}/>)}
+        <ChatInputText onSubmitMessage={onSubmitMessage}/>
       </Flex>
     </Box>
   )
