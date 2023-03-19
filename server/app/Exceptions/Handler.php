@@ -54,7 +54,7 @@ class Handler extends ExceptionHandler
 
         $this->renderable(function (ValidationException $e, $request) {
             $errors = $e->errors();
-            return $this->makeErrorResponse(422, __('入力が無効です。'), $errors);
+            return $this->makeErrorResponse(422, __('Erorr validation'), $errors);
         });
     }
 
