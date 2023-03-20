@@ -20,7 +20,9 @@ const ChatMessages = ({messages, onSubmitMessage}: Props) => {
         direction="column"
         justifyContent="flex-end"
       >
-        {messages.map(message => <ChatMessageItem key={message.id} message={message.message}/>)}
+        <Box sx={{maxHeight: "100%", overflow: "auto"}}>
+          {messages.map(message => <ChatMessageItem key={message.id} message={message.message}/>)}
+        </Box>
         <ChatInputText onSubmitMessage={onSubmitMessage}/>
       </Flex>
     </Box>

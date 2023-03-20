@@ -24,7 +24,7 @@ const ChatInputText = ({onSubmitMessage}: Props) => {
           onChange={(e: ChangeEvent<HTMLInputElement>) => setMessage(e.target.value)}
         />
         <InputRightElement width='4.5rem'>
-          <Button h='1.75rem' colorScheme="blue" size='md' onClick={sendMessage}>
+          <Button h='1.75rem' colorScheme="blue" size='md' disabled={Boolean(message)} onClick={sendMessage}>
             Gửi
           </Button>
         </InputRightElement>
