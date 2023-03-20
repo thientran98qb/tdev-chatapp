@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\MessageSented;
 use App\Http\Controllers\Api\AuthController;
 use App\Models\Message;
 use Illuminate\Http\Request;
@@ -31,9 +32,12 @@ Route::group(['middleware' => "auth:api"], function() {
         $message->message = request()->get('message', '');
         $message->user_id = $user->id;
         $message->save();
-
+        broadcast(new MessageSented($message, $user))->toOthers();
         return ['message' => $message->load('user')];
     });
 });
 Route::post("/login", [AuthController::class, 'login'])->name('api.login');
 Route::post("/register", [AuthController::class, 'register'])->name('api.register');
+Route::middleware('auth:api')->post('/broadcasting/auth', function (Request $request) {
+    return true;
+});
