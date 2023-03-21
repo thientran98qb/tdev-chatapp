@@ -49,9 +49,7 @@ const ChatRoom = (props: Props) => {
         getMess()
     }, [])
     const onSubmitMessage = async (message: string) => {
-        const messageApi = await MessageApi.sendMessage(message)
-        const messageResponse = messageApi.data.message
-        setMessages((prevState) => [...prevState, messageResponse])
+        await MessageApi.sendMessage(message)
     }
   return (
     <Box height="100vh">

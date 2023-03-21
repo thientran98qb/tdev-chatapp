@@ -26,13 +26,11 @@ Route::group(['middleware' => "auth:api"], function() {
         return Message::query()->with('user')->get();
     });
     Route::post('/messages', function() {
-        $user = Auth::user();
+        $message = auth()->user()->messages()->create([
+            'message' => request()->input('message', '')
+        ]);
+        broadcast(new MessageSented($message, auth()->user()))->toOthers();
 
-        $message = new App\Models\Message();
-        $message->message = request()->get('message', '');
-        $message->user_id = $user->id;
-        $message->save();
-        broadcast(new MessageSented($message, $user))->toOthers();
         return ['message' => $message->load('user')];
     });
 });

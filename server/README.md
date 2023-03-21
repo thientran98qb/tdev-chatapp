@@ -62,3 +62,20 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
+## Has lists surver by topic
+B1: Authentication to web
+B2: List survey by topic
+    - Search name survey, sort by name, by star
+    - Filter by topic
+B3: Detail survey
+    - List examples: has sentences, ranking(easy/medium/hard)
+        - Detail Examples:
+            - question, answers
+            - Each question in page, next previous question
+            - Time expired 
+        - Ranking:
+            - Total scores highest
+            - Total time smallest
+            - Ranking (1,2,3,4)
